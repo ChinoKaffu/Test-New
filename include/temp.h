@@ -11,6 +11,7 @@ namespace temp {
             Serial.println("Error connecting to MLX sensor. Check wiring.");
             errorWarn();
         }
+        mlx.writeEmissivity(emissivity);
     }
 
     float get(){

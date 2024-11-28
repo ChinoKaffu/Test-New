@@ -41,6 +41,7 @@ void checkI2C() {
 
 //gets all connected i2c devices, setup
 void scanI2CDevices() {
+    Serial.println();
     byte error;
     numDevices = 0;  // Reset the device count
 

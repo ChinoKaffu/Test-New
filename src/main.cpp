@@ -7,13 +7,15 @@
 
 void setup() {
     Serial.begin(115200);
+    Wire.begin();
+    scanI2CDevices();
 
-    // Initialize Pulse Oximeter
-    pulse::setup(); 
+    // Initialize MLX90614 Temp Sensor
+    temp::setup(); //0x57
     delay(100);
 
-    // Initialize MLX90614 Temperature Sensor
-    temp::setup();  
+    // Initialize Pulse Oximeter MAX30100
+    pulse::setup();  //0x5A
     delay(100);
 }
 
@@ -22,12 +24,12 @@ void loop() {
   
   if (millis() - lastPrintTime >= printInterval) {
         // Print the sensor data
-        printf("\tHeight: %.2f cm", height::get());
-        printf("\tTemp: %.2f *C", temp::get());
-        printf("\tHeart Rate: %.2f BPM", pulse::getRate());
-        printf("\tSpO2: %.2f%%\n", pulse::getOxy());
+        printf("\tHeight: %.2f cm  ", height::get());
+        printf("\tTemp: %.2f°C  ", temp::get());
+        printf("\tHeart Rate: %.2f BPM\tSpO2: %.2f%%\n  ", pulse::getRate(),pulse::getOxy());
         // printf("\tWeight: ## kg\n");
 
         lastPrintTime = millis();  // Update the last print time
     }
+    checkI2C();
 }
