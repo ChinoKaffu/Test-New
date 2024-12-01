@@ -11,10 +11,13 @@ namespace temp {
             Serial.println("Error connecting to MLX sensor. Check wiring.");
             errorWarn();
         }
-        mlx.writeEmissivity(emissivity);
+        if (mlx.readEmissivity() != emissivity) { // Allow for small floating point differences
+            mlx.writeEmissivity(emissivity);
+        }
+        printf("Temp sensor initialized! \n");
     }
 
-    float get(){
+    double get(){
         return mlx.readObjectTempC();
     }
     // Test func that returns ambient and read temp in C and F

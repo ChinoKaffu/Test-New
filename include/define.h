@@ -12,7 +12,10 @@
 #define pulseSDA            21
 #define pulseSCL            22
 
-double emissivity =   0.96;
-unsigned long lastI2CCheck = 0;
+const int weightDT          = 5;
+const int weightSCK         = 4;
+
+double emissivity           = 1.00;
+unsigned long lastI2CCheck  = 0;
 unsigned long lastPrintTime = 0;  // Store the last time the prints were executed
 // Interval in milliseconds (2 seconds)

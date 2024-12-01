@@ -17,13 +17,14 @@ namespace pulse {
             Serial.println("ERROR: Failed to initialize pulse oximeter");
             errorWarn();
         }
+        printf("PulseOxy sensor initialized! \n");
     }
 
     float getRate(){
         return pox.getHeartRate();
     }
 
-    float getOxy(){
+    uint8_t getOxy(){
         return pox.getSpO2();
     }
     
