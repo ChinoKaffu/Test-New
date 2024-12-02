@@ -32,8 +32,6 @@ namespace pulse {
         printf("PulseOxy sensor initialized! \n");
     }
 
-    
-
     float getRate(){
         return pox.getHeartRate();
     }

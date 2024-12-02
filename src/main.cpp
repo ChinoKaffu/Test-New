@@ -9,7 +9,7 @@
 void setup() {
     Serial.begin(115200);
     Wire.begin();
-    //scanI2CDevices();
+    scanI2CDevices();
 
     // Initialize MLX90614 Temp Sensor
     temp::setup(); //0x57
@@ -18,7 +18,7 @@ void setup() {
     pulse::setup();  //0x5A
 
     // Initialize HX711 Weight Sensor
-    weight::setup();
+    //weight::setup();
 }
 
 void loop() {
@@ -35,5 +35,5 @@ void loop() {
         lastPrintTime = millis();  // Update the last print time
     }
     
-    //checkI2C();
+    checkI2C();
 }
