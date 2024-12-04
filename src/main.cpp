@@ -4,12 +4,15 @@
 #include <temp.h>
 #include <pulse.h>
 #include <height.h>
-#include <weight.h>
+//#include <weight.h>
 
 void setup() {
     Serial.begin(115200);
     Wire.begin();
     scanI2CDevices();
+
+    // Initialize HCSR04 Ranging Sensor functions
+    //height::setup();
 
     // Initialize MLX90614 Temp Sensor
     temp::setup(); //0x57

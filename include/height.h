@@ -4,13 +4,24 @@ UltraSonicDistanceSensor distanceSensor(
             ULTRASONIC_TRIGGER, 
             ULTRASONIC_ECHO
         );
-
+volatile float storedHeight = 0;
 
 namespace height {
 
     float get(){
         return distanceSensor.measureDistanceCm();
     }
+
+    void IRAM_ATTR buttonISR() {
+        storedHeight = get();
+        //Serial.println(storedHeight);
+    }
+
+    void setup(){
+        pinMode(heightReference, INPUT);
+        attachInterrupt(heightReference, buttonISR, RISING);
+    }
+
     // test func that displays detected distance continously
     void loop() {
         // Print the distance values

@@ -7,14 +7,17 @@
 #define checkInterval       5000
 #define printInterval       500 //interval of printing updates
 
+
+#define serial              115200
 #define tempSDA             19
 #define tempSCL             18
 #define tempBias            5
 #define pulseSDA            21
 #define pulseSCL            22
+#define heightReference     15
 
-const int weightDT          = 5;
-const int weightSCK         = 4;
+const int weightDT          = 32;
+const int weightSCK         = 33;
 
 double emissivity           = 1.00;
 unsigned long lastI2CCheck  = 0;
