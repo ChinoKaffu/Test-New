@@ -19,7 +19,7 @@
 const int weightDT          = 32;
 const int weightSCK         = 33;
 
-double emissivity           = 1.00;
+double emissivity           = 0.99;
 unsigned long lastI2CCheck  = 0;
 unsigned long lastPrintTime = 0;  // Store the last time the prints were executed
 // Interval in milliseconds (2 seconds)

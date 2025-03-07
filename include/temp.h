@@ -18,7 +18,7 @@ namespace temp {
     }
 
     double get(){
-        return mlx.readObjectTempC();
+        return mlx.readObjectTempC() + 6; //+ number integer is bias
     }
     // Test func that returns ambient and read temp in C and F
     void getTemp() {

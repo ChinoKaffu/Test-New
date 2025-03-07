@@ -32,10 +32,10 @@ void loop() {
 
   if (millis() - lastPrintTime >= printInterval) {
         // Print the sensor data
-        Serial.print("\tHeight: " + String(height::get(),2) + " cm  ");
-        Serial.print("\tTemp: " + String(temp::get(), 2) + "°C ");
-        Serial.print("\tHeart Rate: " + String (pulse::getRate(), 2) + " BPM\t");
-        Serial.println("\tSpO2: " + String (pulse::getOxy()) + " %\t");
+        Serial.print("\tHeight: " + String     (height::get(),2) + " cm  ");
+        Serial.print("\tTemp: " + String       (temp  ::get(), 2) + "°C ");
+        Serial.print("\tHeart Rate: " + String (pulse ::getRate(), 2) + " BPM\t");
+        Serial.println("\tSpO2: " + String     (pulse ::getOxy()) + " %\t");
         //Serial.println("\tWeight: " + String(weight::get(), 2) + " kg");    
 
         lastPrintTime = millis();  // Update the last print time
