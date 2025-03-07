@@ -1,23 +1,23 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-#define ULTRASONIC_TRIGGER  26
-#define ULTRASONIC_ECHO     25
+#define serial              115200
+#define tempBias            5
+
 #define MAX_DEVICES         20
 #define checkInterval       5000
 #define printInterval       500 //interval of printing updates
 
-
-#define serial              115200
+//connections
+#define ULTRASONIC_TRIGGER  25
+#define ULTRASONIC_ECHO     26
 #define tempSDA             19
 #define tempSCL             18
-#define tempBias            5
 #define pulseSDA            21
 #define pulseSCL            22
-#define heightReference     15
-
-const int weightDT          = 32;
-const int weightSCK         = 33;
+#define heightReference     15 //button to calibrate height
+#define weightSCK           27
+#define weightDT            14
 
 double emissivity           = 0.99;
 unsigned long lastI2CCheck  = 0;
