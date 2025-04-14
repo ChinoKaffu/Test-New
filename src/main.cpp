@@ -9,40 +9,93 @@
 void setup() {
     Serial.begin(115200);
     Wire.begin();
+    errorSetup();
     scanI2CDevices();
 
-    // Initialize HCSR04 Ranging Sensor functions
-    //height::setup();
+    // Initialize HX711 Weight Sensor
+    weight::setup();
 
-    // Initialize MLX90614 Temp Sensor
-    //temp::setup(); //0x57
+    // Initialize HCSR04 Ranging Sensor functions
+    height::setup();
+
+sa_handler
+FUNC_SD_DATA0_SD_DATA0asd
+asd
+sa_handlera
+ASSERT_IF_DPORT_REGas
+asctime
+
+
+a64lAA
+a64l Temp Sensor
+a64la
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+aaaaaaaaaaaaaaaaaaaaaaaaa
+ravendavid
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      temp::setup(); //0x57
 
     // Initialize MAX30100 Pulse Oximeter
     pulse::setup();  //0x5A
 
-    // Initialize HX711 Weight Sensor
-    weight::setup();
 }
 
-float tall;
 void loop() {       
     {
-        pox.update();
-        //height::update();
+        pox.update();   height::update();   weight::update();
 
         if (millis() - lastPrintTime >= printInterval) {
-            tall = height::get();
-            // Print the sensor data
-            //Serial.print("\tHeight: " + String(tall, 2) + " cm  ");
-            //Serial.print("\tTemp: " + String(temp::get(), 2) + "°C ");
+            //Print the sensor data
+            Serial.print("\tHeight: " + String(height::get(), 2) + " cm  ");
+            Serial.print("\tTemp: " + String(temp::get(), 2) + "°C ");
             Serial.print("\tHeart Rate: " + String(pulse::getRate(), 2) + " BPM\t");
             Serial.print("\tSpO2: " + String(pulse::getOxy()) + " %\t");
-            Serial.print("\tWeight: " + String(weight::get(), 2) + " kg\n");    
-            //Serial.println("\tBMI: " + String(weight::get() / tall*tall, 2));
+            Serial.print("\tWeight: " + String(weight::get(), 2) + " kg\t");    
+            Serial.println("\tBMI: " + String(weight::get() / pow(height::get() / 100.0, 2), 2));
+
 
             lastPrintTime = millis();  // Update the last print time
         }
-        //checkI2C();
+        checkI2C(); checkManualReset();
     }
-    
 }

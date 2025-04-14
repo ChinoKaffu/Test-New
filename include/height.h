@@ -1,16 +1,13 @@
 #include <HCSR04.h>
 
 UltraSonicDistanceSensor distanceSensor(
-            ULTRASONIC_TRIGGER, 
-            ULTRASONIC_ECHO
-        );
-
+    ULTRASONIC_TRIGGER, 
+    ULTRASONIC_ECHO
+);
 
 namespace height {
     volatile float heightNow = 0;
-    volatile float storedHeight;  // Declare as volatile to be used in ISR
-    volatile unsigned long lastInterruptTime = 0;  // Track the last interrupt time
-    const unsigned long debounceDelay = 300;  // Debounce delay in milliseconds (adjust as needed)
+    const float referenceHeight = 185.0;  // Fixed reference height in cm
 
     float update() {
         static unsigned long lastUpdate = 0;
@@ -23,20 +20,11 @@ namespace height {
         return heightNow;
     }
 
-    float get(){
-        return storedHeight - heightNow;
-    }
-
-    void IRAM_ATTR buttonISR() {
-        unsigned long currentTime = millis();  // Get the current time
-        if (currentTime - lastInterruptTime > debounceDelay) {  // Check if debounce time has passed
-            storedHeight = heightNow;  // Safely update the height count
-            lastInterruptTime = currentTime;  // Update the last interrupt time
-        }
+    float get() {
+        return referenceHeight - heightNow;
     }
 
     void setup() {
-        pinMode(heightReference, INPUT_PULLDOWN);  // Use pulldown or pullup depending on button wiring
-        attachInterrupt(digitalPinToInterrupt(heightReference), buttonISR, RISING);  // Trigger on rising edge
+        // Nothing needed here since we don't use interrupts anymore
     }
 }

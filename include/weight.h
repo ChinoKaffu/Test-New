@@ -23,8 +23,10 @@ namespace weight{
     LoadCell.start(stabilizingtime, _tare);
   }
 
-  float get(){
+  void update(){
     LoadCell.update();
+  }
+  float get(){
     return LoadCell.getData()/22.2222/1000;
   }
 }

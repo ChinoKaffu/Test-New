@@ -4,6 +4,7 @@
 
 uint8_t i2cDevices[MAX_DEVICES];
 uint8_t numDevices = 0;  // Keep track of the number of detected devices
+volatile bool resetRequested = false;
 
 // blink on board led for 3 sec then restart sys
 void errorWarn() {
@@ -64,4 +65,21 @@ void scanI2CDevices() {
     if (numDevices == 0) {
         Serial.println("No I2C devices found.");
     }
+
+}
+
+void IRAM_ATTR handleResetInterrupt() {
+    resetRequested = true;
+}
+
+void checkManualReset() {
+    if (resetRequested) {
+        resetRequested = false;
+        errorWarn();  // Blink + restart
+    }
+}
+
+void errorSetup() {
+    pinMode(RESET_BUTTON_PIN, INPUT_PULLDOWN);
+    attachInterrupt(digitalPinToInterrupt(RESET_BUTTON_PIN), handleResetInterrupt, RISING);
 }
