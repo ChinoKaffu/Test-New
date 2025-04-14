@@ -1,5 +1,6 @@
 #include <define.h>
 // put other includes here
+#include <espweb.h>
 #include <error.h>
 #include <temp.h>
 #include <pulse.h>
@@ -7,10 +8,13 @@
 #include <height.h>
 
 void setup() {
-    Serial.begin(115200);
+    Serial.begin(serial_speed);
     Wire.begin();
     errorSetup();
     scanI2CDevices();
+
+    //Initialize ESP-WEB connection
+    espweb::setup();
 
     // Initialize HX711 Weight Sensor
     weight::setup();
@@ -18,62 +22,8 @@ void setup() {
     // Initialize HCSR04 Ranging Sensor functions
     height::setup();
 
-sa_handler
-FUNC_SD_DATA0_SD_DATA0asd
-asd
-sa_handlera
-ASSERT_IF_DPORT_REGas
-asctime
-
-
-a64lAA
-a64l Temp Sensor
-a64la
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-aaaaaaaaaaaaaaaaaaaaaaaaa
-ravendavid
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      temp::setup(); //0x57
+    // Initialize MLX90614 Temp Sensor
+    temp::setup(); //0x57
 
     // Initialize MAX30100 Pulse Oximeter
     pulse::setup();  //0x5A
@@ -82,7 +32,7 @@ ravendavid
 
 void loop() {       
     {
-        pox.update();   height::update();   weight::update();
+        pox.update();   height::update();   weight::update();   espweb::loop();
 
         if (millis() - lastPrintTime >= printInterval) {
             //Print the sensor data

@@ -1,12 +1,10 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-#define serial              115200
-#define tempBias            5
-
+#define serial_speed        115200
 #define MAX_DEVICES         20
 #define checkInterval       5000
-#define printInterval       500 //interval of printing updates
+#define printInterval       2000 //interval of printing updates
 
 //connections
 #define ULTRASONIC_TRIGGER  25
@@ -18,6 +16,10 @@
 #define RESET_BUTTON_PIN    15
 #define weightSCK           12
 #define weightDT            13
+
+//wifi
+#define wifissid            "tite"
+#define wifipass            "bayag"
 
 
 #define tempBIAS            4  //temp bias to acceptable level
