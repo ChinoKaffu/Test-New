@@ -4,9 +4,8 @@
 const char* ssid = wifissid;
 const char* password = wifipass;
 // 192.168.100.223
-
-const char* serverAddress = "192.168.1.12";
-const int serverPort = 4000; 
+const char* serverAddress = addressServer;
+const int serverPort = addressPort; 
 
 WebSocketsClient webSocket;
 
@@ -30,7 +29,6 @@ void setup() {
     WiFi.begin(ssid, password);
 
     while (WiFi.status() != WL_CONNECTED) {
-        delay(1000);
         Serial.println("Connecting to WiFi...");
     }
     Serial.println("Connected to WiFi!");
@@ -41,14 +39,21 @@ void setup() {
     }
 
 
-    void loop() {
+void send(float heightValue, float tempValue, float heartRate, int spO2, float weightValue, float bmiValue) {
+    
 
-    webSocket.loop();
+    if (webSocket.isConnected()) {
+        String json = "{";
+        json += "\"height\": " + String(heightValue, 2) + ",";
+        json += "\"weight\": " + String(weightValue, 2) + ",";
+        json += "\"BMI\": " + String(bmiValue, 2) + ",";
+        json += "\"bodyTemperature\": " + String(tempValue, 2) + ",";
+        json += "\"pulseRate\": " + String(heartRate, 2) + ",";
+        json += "\"bloodOxygenLevel\": " + String(spO2);
+        json += "}";
 
-    if (webSocket.isConnected()) {  // Only send if connected
-        String json = "{\"dog_style\": " + String(69) + "}";
         webSocket.sendTXT(json);
-        delay(2000);
-    }
     }
 }
+
+    }

@@ -4,7 +4,7 @@
 #define serial_speed        115200
 #define MAX_DEVICES         20
 #define checkInterval       5000
-#define printInterval       2000 //interval of printing updates
+#define printInterval       1000 //interval of printing updates
 
 //connections
 #define ULTRASONIC_TRIGGER  25
@@ -18,8 +18,10 @@
 #define weightDT            13
 
 //wifi
-#define wifissid            "tite"
-#define wifipass            "bayag"
+#define wifissid            "Kenvj"
+#define wifipass            "unliload"
+#define addressServer       "192.168.58.50"
+#define addressPort         4000
 
 
 #define tempBIAS            4  //temp bias to acceptable level
@@ -32,10 +34,8 @@ unsigned long lastPrintTime = 0;  // Store the last time the prints were execute
 
 // Sampling is tightly related to the dynamic range of the ADC.
 // refer to the datasheet for further info
-#define SAMPLING_RATE                       MAX30100_SAMPRATE_100HZ
-
-#define IR_LED_CURRENT                      MAX30100_LED_CURR_50MA
-#define RED_LED_CURRENT                     MAX30100_LED_CURR_27_1MA
-// set HIGHRES_MODE to true only when setting PULSE_WIDTH to MAX30100_SPC_PW_1600US_16BITS
-#define PULSE_WIDTH                         MAX30100_SPC_PW_1600US_16BITS
-#define HIGHRES_MODE                        false
+#define SAMPLING_RATE       MAX30100_SAMPRATE_100HZ
+#define IR_LED_CURRENT      MAX30100_LED_CURR_24MA     // Lower current = less noise
+#define RED_LED_CURRENT     MAX30100_LED_CURR_27_1MA   // Safe default for SpO₂
+#define PULSE_WIDTH         MAX30100_SPC_PW_800US_15BITS // Best for non-High-Res
+#define HIGHRES_MODE        false
