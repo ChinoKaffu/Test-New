@@ -8,7 +8,10 @@
 #include <espweb.h>
 
 void setup() {
-    Serial.begin(serial_speed);    Wire.begin();    errorSetup();    scanI2CDevices();
+    Serial.begin(serial_speed);
+    Wire.begin();
+    errorSetup();
+    scanI2CDevices();
 
     //Initialize ESP-WEB connection
     espweb::setup();
@@ -24,11 +27,14 @@ void setup() {
 
     // Initialize MAX30100 Pulse Oximeter
     pulse::setup();  //0x5A
+
 }
 
 void loop() {
-    // Update all sensors; uninterruptable, required no delay
-    pox.update();    height::update();    weight::update();     webSocket.loop(); 
+    // Update all sensors
+    pox.update();    height::update();    weight::update();     webSocket.loop();
+    
+    
      
     if (millis() - lastPrintTime >= printInterval) {
 
@@ -39,13 +45,14 @@ void loop() {
             );
 
         // Serial monitor display
-        printf("\tHeight: %.2f cm\tTemp: %.2f°C\tHeart Rate: %.2f BPM\tSpO2: %d %%\tWeight: %.2f kg\tBMI: %.2f"
-        , heightValue, tempValue, heartRate, spO2, weightValue, bmiValue);
+        printf("\tHeight: %.2f cm\tTemp: %.2f°C\tHeart Rate: %.2f BPM\tSpO2: %.0f %%\tWeight: %.2f kg \tBMI: %.2f\n",
+        heightValue, tempValue, heartRate, spO2, weightValue, bmiValue);
 
         // Pass variables to web server
         espweb::send(heightValue, tempValue, heartRate, spO2, weightValue, bmiValue);
         lastPrintTime = millis();
     }
+
         
     checkI2C();
     checkManualReset();

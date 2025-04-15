@@ -42,12 +42,8 @@ unsigned long lastPrintTime = 0;  // Store the last time the prints were execute
 
 
 // Global variables to store sensor readings
-float heightValue = 0;
-float tempValue = 0;
-float heartRate = 0;
-float spO2 = 0;
-float weightValue = 0;
-float bmiValue = 0;
+float   heightValue = 0, tempValue = 0, heartRate = 0, 
+        spO2 = 0, weightValue = 0, bmiValue = 0;
 
 void gatherData(float h, float t, int hr, int oxy, float w, float bmi) {
     heightValue = h;    tempValue = t;
