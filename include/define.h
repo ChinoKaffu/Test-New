@@ -35,7 +35,22 @@ unsigned long lastPrintTime = 0;  // Store the last time the prints were execute
 // Sampling is tightly related to the dynamic range of the ADC.
 // refer to the datasheet for further info
 #define SAMPLING_RATE       MAX30100_SAMPRATE_100HZ
-#define IR_LED_CURRENT      MAX30100_LED_CURR_24MA     // Lower current = less noise
+#define IR_LED_CURRENT      MAX30100_LED_CURR_24MA     // Lower current = less noise //before 24MA
 #define RED_LED_CURRENT     MAX30100_LED_CURR_27_1MA   // Safe default for SpO₂
 #define PULSE_WIDTH         MAX30100_SPC_PW_800US_15BITS // Best for non-High-Res
 #define HIGHRES_MODE        false
+
+
+// Global variables to store sensor readings
+float heightValue = 0;
+float tempValue = 0;
+float heartRate = 0;
+float spO2 = 0;
+float weightValue = 0;
+float bmiValue = 0;
+
+void gatherData(float h, float t, int hr, int oxy, float w, float bmi) {
+    heightValue = h;    tempValue = t;
+    heartRate = hr;     spO2 = oxy;
+    weightValue = w;    bmiValue = bmi;
+}

@@ -3,39 +3,21 @@
 
 const char* ssid = wifissid;
 const char* password = wifipass;
-// 192.168.100.223
 const char* serverAddress = addressServer;
 const int serverPort = addressPort; 
 
 WebSocketsClient webSocket;
 
-void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
-  switch(type) {
-    case WStype_CONNECTED:
-      Serial.println("Connected to WebSocket Server!");
-      break;
-    case WStype_TEXT:
-      Serial.printf("Received from Server: %s\n", payload);
-      break;
-    case WStype_DISCONNECTED:
-      Serial.println("Disconnected from WebSocket Server!");
-      break;
-  }
-}
-
 namespace espweb{
     
 void setup() {
     WiFi.begin(ssid, password);
-
-    while (WiFi.status() != WL_CONNECTED) {
-        Serial.println("Connecting to WiFi...");
-    }
-    Serial.println("Connected to WiFi!");
+    Serial.println("Connecting to WiFi...");
+    while (WiFi.status() != WL_CONNECTED) {printf(".");}
+    Serial.println("\nConnected to WiFi!");
 
     // Correct WebSocket connection path
     webSocket.begin(serverAddress, serverPort, "/readings", "ws");
-    webSocket.onEvent(webSocketEvent);
     }
 
 

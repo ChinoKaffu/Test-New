@@ -8,10 +8,7 @@
 #include <espweb.h>
 
 void setup() {
-    Serial.begin(serial_speed);
-    Wire.begin();
-    errorSetup();
-    scanI2CDevices();
+    Serial.begin(serial_speed);    Wire.begin();    errorSetup();    scanI2CDevices();
 
     //Initialize ESP-WEB connection
     espweb::setup();
@@ -27,47 +24,28 @@ void setup() {
 
     // Initialize MAX30100 Pulse Oximeter
     pulse::setup();  //0x5A
-
 }
 
-// Global variables to store sensor readings
-float heightValue = 0;
-float tempValue = 0;
-float heartRate = 0;
-float spO2 = 0;
-float weightValue = 0;
-float bmiValue = 0;
-
 void loop() {
-    // Update all sensors
-    pox.update();    height::update();    weight::update();     webSocket.loop();
-    
-    // Store readings in variables (single call to each getter)
-    
-    
+    // Update all sensors; uninterruptable, required no delay
+    pox.update();    height::update();    weight::update();     webSocket.loop(); 
+     
     if (millis() - lastPrintTime >= printInterval) {
-        // Print using stored variables
-        heightValue = height::get();
-        tempValue = temp::get();
-        heartRate = pulse::getRate();
-        spO2 = pulse::getOxy();
-        weightValue = weight::get();
-        bmiValue = weightValue / pow(heightValue / 100.0, 2);
-        
-        Serial.print("\tHeight: " + String(heightValue, 2) + " cm  ");
-        Serial.print("\tTemp: " + String(tempValue, 2) + "°C ");
-        Serial.print("\tHeart Rate: " + String(heartRate, 2) + " BPM\t");
-        Serial.print("\tSpO2: " + String(spO2) + " %\t");
-        Serial.print("\tWeight: " + String(weightValue, 2) + " kg\t");    
-        Serial.println("\tBMI: " + String(bmiValue, 2));
-    
 
-        // Pass same variables to web server
+        gatherData( // Store readings in variables (single call to each getter)
+            height::get(),temp::get(),pulse::getRate(),
+            pulse::getOxy(),weight::get(),
+            weight::get() / pow(height::get() / 100.0, 2)
+            );
+
+        // Serial monitor display
+        printf("\tHeight: %.2f cm\tTemp: %.2f°C\tHeart Rate: %.2f BPM\tSpO2: %d %%\tWeight: %.2f kg\tBMI: %.2f"
+        , heightValue, tempValue, heartRate, spO2, weightValue, bmiValue);
+
+        // Pass variables to web server
         espweb::send(heightValue, tempValue, heartRate, spO2, weightValue, bmiValue);
-        
         lastPrintTime = millis();
     }
-
         
     checkI2C();
     checkManualReset();
