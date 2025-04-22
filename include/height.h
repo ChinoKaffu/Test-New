@@ -21,7 +21,7 @@ namespace height {
     }
 
     float get() {
-        return referenceHeight - heightNow;
+        return referenceHeight - heightNow heightBIAS;
     }
 
     void setup() {

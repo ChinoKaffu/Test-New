@@ -20,7 +20,7 @@ namespace temp {
     }
 
     double get(){
-        return mlx.readObjectTempC() + tempBIAS;
+        return mlx.readObjectTempC() tempBIAS;
     }
     // Test func that returns ambient and read temp in C and F
     void getTemp() {

@@ -34,13 +34,12 @@ void loop() {
     // Update all sensors
     pox.update();    height::update();    weight::update();     webSocket.loop();
     
-    
      
     if (millis() - lastPrintTime >= printInterval) {
 
         gatherData( // Store readings in variables (single call to each getter)
             height::get(),temp::get(),pulse::getRate(),
-            pulse::getOxy(),weight::get(),
+            pulse::getOxy(),weight::get() weightBIAS,
             weight::get() / pow(height::get() / 100.0, 2)
             );
 
@@ -52,7 +51,6 @@ void loop() {
         espweb::send(heightValue, tempValue, heartRate, spO2, weightValue, bmiValue);
         lastPrintTime = millis();
     }
-
         
     checkI2C();
     checkManualReset();

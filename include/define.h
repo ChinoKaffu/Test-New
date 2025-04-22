@@ -20,11 +20,12 @@
 //wifi
 #define wifissid            "Kenvj"
 #define wifipass            "unliload"
-#define addressServer       "192.168.58.50"
+#define addressServer       "192.168.157.50"
 #define addressPort         4000
 
-
-#define tempBIAS            4  //temp bias to acceptable level
+#define weightBIAS          +2
+#define tempBIAS            +4
+#define heightBIAS          +8
 double emissivity           = 0.99;
 
 
