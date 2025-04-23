@@ -32,9 +32,8 @@ void setup() {
 
 void loop() {
     // Update all sensors
-    pox.update();    height::update();    weight::update();     webSocket.loop();
+    pox.update();   height::update();    weight::update();     webSocket.loop();
     
-     
     if (millis() - lastPrintTime >= printInterval) {
 
         gatherData( // Store readings in variables (single call to each getter)

@@ -9,10 +9,8 @@
 //connections
 #define ULTRASONIC_TRIGGER  25
 #define ULTRASONIC_ECHO     26
-#define tempSDA             19
-#define tempSCL             18
-#define pulseSDA            21
-#define pulseSCL            22
+#define SCL                 21 //goes for both temp and pulse
+#define SDA                 22 //goes for both temp and pulse
 #define RESET_BUTTON_PIN    15
 #define weightSCK           12
 #define weightDT            13
@@ -25,10 +23,10 @@
 
 #define weightBIAS          +2
 #define tempBIAS            +4
-#define heightBIAS          +8
+#define heightBIAS          -3
 double emissivity           = 0.99;
 
-
+unsigned long lastCheck = 0;
 unsigned long lastI2CCheck  = 0;
 unsigned long lastPrintTime = 0;  // Store the last time the prints were executed
 // Interval in milliseconds (2 seconds)
