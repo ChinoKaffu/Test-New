@@ -4,7 +4,7 @@
 #define serial_speed        115200
 #define MAX_DEVICES         20
 #define checkInterval       5000
-#define printInterval       1000 //interval of printing updates
+#define printInterval       200 //interval of printing updates
 
 //connections
 #define ULTRASONIC_TRIGGER  25
@@ -39,13 +39,25 @@ unsigned long lastPrintTime = 0;  // Store the last time the prints were execute
 #define PULSE_WIDTH         MAX30100_SPC_PW_800US_15BITS // Best for non-High-Res
 #define HIGHRES_MODE        false
 
+byte ledBrightness = 0x0A; //Options: 0=Off to 255=50mA
+byte sampleAverage = 8; //Options: 1, 2, 4, 8, 16, 32
+byte ledMode = 2; //Options: 1 = Red only, 2 = Red + IR, 3 = Red + IR + Green
+int sampleRate = 100; //Options: 50, 100, 200, 400, 800, 1000, 1600, 3200
+int pulseWidth = 411; //Options: 69, 118, 215, 411
+int adcRange = 4096; //Options: 2048, 4096, 8192, 16384
+
+
+int8_t SPO2Valid; //Flag to display if SPO2 calculation is valid
+int8_t heartRateValid; //Flag to display if heart-rate calculation is valid 
 
 // Global variables to store sensor readings
 float   heightValue = 0, tempValue = 0, heartRate = 0, 
         spO2 = 0, weightValue = 0, bmiValue = 0;
 
-void gatherData(float h, float t, int hr, int oxy, float w, float bmi) {
+void gatherData(float h, float t, float hr, float oxy, float w, float bmi) {
     heightValue = h;    tempValue = t;
     heartRate = hr;     spO2 = oxy;
     weightValue = w;    bmiValue = bmi;
 }
+
+void pulseoxyTest(float hr, float oxy){ heartRate = hr;     spO2 = oxy; };

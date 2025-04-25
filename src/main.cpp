@@ -9,12 +9,12 @@
 
 void setup() {
     Serial.begin(serial_speed);
-    Wire.begin();
+    Wire.begin(SCL,SDA);
     errorSetup();
-    scanI2CDevices();
+    scanI2CDevices();  // Uncomment to scan for I2C devices
 
     //Initialize ESP-WEB connection
-    espweb::setup();
+    //espweb::setup();
 
     // Initialize HX711 Weight Sensor
     weight::setup();
@@ -32,7 +32,7 @@ void setup() {
 
 void loop() {
     // Update all sensors
-    pox.update();   height::update();    weight::update();     webSocket.loop();
+    height::update();    weight::update();     webSocket.loop();
     
     if (millis() - lastPrintTime >= printInterval) {
 
@@ -41,16 +41,17 @@ void loop() {
             pulse::getOxy(),weight::get() weightBIAS,
             weight::get() / pow(height::get() / 100.0, 2)
             );
+        pulseoxyTest(pulse::getRate(),pulse::getOxy());
+        
 
         // Serial monitor display
         printf("\tHeight: %.2f cm\tTemp: %.2f°C\tHeart Rate: %.2f BPM\tSpO2: %.0f %%\tWeight: %.2f kg \tBMI: %.2f\n",
         heightValue, tempValue, heartRate, spO2, weightValue, bmiValue);
-
         // Pass variables to web server
-        espweb::send(heightValue, tempValue, heartRate, spO2, weightValue, bmiValue);
+        //espweb::send(heightValue, tempValue, heartRate, spO2, weightValue, bmiValue);
         lastPrintTime = millis();
     }
         
-    checkI2C();
-    checkManualReset();
+    //checkI2C();
+    //checkManualReset();
 }
