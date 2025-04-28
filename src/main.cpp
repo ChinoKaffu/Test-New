@@ -11,7 +11,7 @@ void setup() {
     Serial.begin(serial_speed);
     Wire.begin(SCL,SDA);
     errorSetup();
-    scanI2CDevices();  // Uncomment to scan for I2C devices
+    scanI2CDevices();  // Uncomment to scan for I2C devicesr
 
     //Initialize ESP-WEB connection
     //espweb::setup();
@@ -32,7 +32,7 @@ void setup() {
 
 void loop() {
     // Update all sensors
-    height::update();    weight::update();     webSocket.loop();
+    height::update();    weight::update();     //webSocket.loop();
     
     if (millis() - lastPrintTime >= printInterval) {
 
@@ -52,6 +52,6 @@ void loop() {
         lastPrintTime = millis();
     }
         
-    //checkI2C();
-    //checkManualReset();
+    checkI2C();
+    checkManualReset();
 }
